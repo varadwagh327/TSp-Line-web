@@ -12,7 +12,7 @@ const Messages = () => {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/message/getall",
+          "https://tsp-line-web.onrender.com/api/v1/message/getall",
           { withCredentials: true }
         ); 
         console.log(data);
