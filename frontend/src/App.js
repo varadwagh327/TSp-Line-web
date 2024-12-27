@@ -46,7 +46,7 @@ useEffect(() => {
   const fetchUser = async () => {
     try {
       const response = await axios.get(
-        "https://tsp-line-web.onrender.com/api/v1/user/user/me",
+        "http://localhost:4000/api/v1/user/user/me",
         {
           withCredentials: true,
         }
