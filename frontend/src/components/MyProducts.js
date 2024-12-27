@@ -12,7 +12,7 @@ function MyProducts() {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/product/getall",
+          "https://tsp-line-web.onrender.com/api/v1/product/getall",
           { withCredentials: true }
         );
         setProduct(data.product);

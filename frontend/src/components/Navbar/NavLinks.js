@@ -12,7 +12,7 @@ const NavLinks = () => {
 
   const handleLogout = async () => {
     await axios
-      .get("http://localhost:4000/api/v1/user/user/logout", {
+      .get("https://tsp-line-web.onrender.com/api/v1/user/user/logout", {
         withCredentials: true,
       })
       .then((res) => {
