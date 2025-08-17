@@ -41,7 +41,7 @@ export default function AboutPage() {
         </div>
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-10 md:mt-15">
              <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Trusted Simple Line</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/massageLogin">Trusted Simple Line</HashLink></p>
             <p className="text-sm md:text-xl">
             At Trusted Simple Line, we provide reliable, straightforward IT solutions tailored to meet your business needs. Our mission is to simplify technology, delivering secure and efficient services you can trust—from expert consultations to complete web development and hosting. We focus on making tech easy, helping your business succeed online with confidence.</p>
            </div> 
@@ -97,7 +97,7 @@ export default function AboutPage() {
         </div>
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">
              <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Aditya Kakade = Marketing Head</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/loginEmail">Aditya Kakade</HashLink> = Marketing Head</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel: 9975397011</p>
@@ -120,7 +120,7 @@ export default function AboutPage() {
       <div className=" background1 max-w-screen-2xl container mx-auto md:px-20 px-4 flex flex-col md:flex-row my-10">
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">          
           <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Omkar Pande = Media Head</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/loginEmail">Omkar Pande</HashLink> = Media Head</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel:  8624963808</p>
@@ -161,7 +161,7 @@ export default function AboutPage() {
         </div>
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">
              <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Sushant Bhor = Event/Cultural Head</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/loginEmail">Sushant Bhor</HashLink> = Event/Cultural Head</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel: 9356626609</p>
@@ -185,7 +185,7 @@ export default function AboutPage() {
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">          
           <div className="space-y-8">
 
-             <p className="text-blue-900 text-2xl md:text-4xl font-bold"> <HashLink smooth to="/massageLogin">Varad Wagh</HashLink> = Back-End Development</p>
+             <p className="text-blue-900 text-2xl md:text-4xl font-bold"> <HashLink smooth to="/loginEmail">Varad Wagh</HashLink> = Back-End Development</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel: 8421893853</p>
@@ -226,7 +226,7 @@ export default function AboutPage() {
         </div>
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">
              <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Rohan Gaikwad = Front-End Development</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/loginEmail">Rohan Gaikwad</HashLink> = Front-End Development</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel: 8010385661 </p>
@@ -249,7 +249,7 @@ export default function AboutPage() {
       <div className=" background1 max-w-screen-2xl container mx-auto md:px-20 px-4 flex flex-col md:flex-row my-10">
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">          
           <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Sanket Dere = Testing & Debugging</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/loginEmail">Sanket Dere</HashLink> = Testing & Debugging</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel: 7588663201</p>
@@ -287,7 +287,7 @@ export default function AboutPage() {
         </div>
         <div className="w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36">
              <div className="space-y-8">
-            <p className="text-blue-900 text-2xl md:text-4xl font-bold">Mayur Kanhore = Client Communication</p>
+            <p className="text-blue-900 text-2xl md:text-4xl font-bold"><HashLink smooth to="/loginEmail">Mayur Kanhore</HashLink> = Client Communication</p>
             <div className="flex flex-col">
                         <h2 className="text-2xl">Call Us:</h2>
                         <p className="text-gray-400 text-xl">Tel: 9075759446</p>
