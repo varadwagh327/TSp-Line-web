@@ -7,7 +7,7 @@ function Cards({ item }) {
       <div className="mt-4 my-3 p-3">
         <div className="card w-92 bg-base-100 shadow-xl hover:scale-105 duration-200 dark:bg-slate-900 dark:text-white dark:border">
           <figure>
-          <img src={item.image} alt="varad" />
+          <img src={item.image} alt="varad" className="fix" width={400} height={300} />
           </figure>
           <div className="card-body">
             <h2 className="card-title">

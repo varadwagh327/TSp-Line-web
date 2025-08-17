@@ -52,7 +52,7 @@ const Login = () => {
         return <Navigate to={"/"} />;
       }
     
-    return (
+    return ( 
         <>
             <div>
                 <NavBar />
