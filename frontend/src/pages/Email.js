@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Context } from "../index.js";
 import NavBar from '../components/Navbar/SendEmailNavBar';
 import Footer from '../components/Footer';
+import toast from 'react-hot-toast';
 
 // HomePage Component
 export default function Email() {
@@ -19,43 +20,43 @@ export default function Email() {
    * @param {string} emailDescription - The body/description of the email.
    */
   const handleSendEmail = async (emailTitle, emailDescription) => {
-    const email = "varadwagh327@gmail.com";
-    try {
-      // Validate that name and email are provided
-      if (!name.trim()) {
-        alert('Please enter your name before sending an email.');
-        return;
-      }
-
-      const senderName = name;
-      const senderEmail = email;
-
-
-      console.log(`Attempting to send email:
-        Subject: ${emailTitle}
-        Body: ${emailDescription}
-        From: ${senderName} (${senderEmail})
-      `);
-
-      // IMPORTANT: The API endpoint has been updated here to "http://localhost:8080/api/user/email"
-      // The payload structure (name, email) should match what your backend expects.
-      const response = await axios.post("http://localhost:4000/api/user/Email/email", {
-            name: senderName,
-            title: emailTitle,       // Use the argument passed from FeatureCard
-            description: emailDescription, // Use the argument passed from FeatureCard
-            email: senderEmail,
-        }, { withCredentials: true }); // Keep withCredentials if your backend requires session cookies
-
-      console.log("Email sent successfully:", response.data);
-      // In a real application, replace alert with a custom modal or toast notification
-      alert('Email sent successfully!');
-
-    } catch (error) {
-      console.error("Error sending email:", error.response ? error.response.data : error.message);
-      // In a real application, replace alert with a custom modal or toast notification
-     alert('Email sent successfully!');
+  const email = "varadwagh327@gmail.com";
+  try {
+    // Validate name
+    if (!name.trim()) {
+      toast.error("Please enter your name before sending an email.");
+      return;
     }
-  };
+
+    const senderName = name;
+    const senderEmail = email;
+
+    console.log(`Attempting to send email:
+      Subject: ${emailTitle}
+      Body: ${emailDescription}
+      From: ${senderName} (${senderEmail})
+    `);
+
+    // Send API request
+    const response = await axios.post(
+      "http://localhost:4000/api/user/Email/email",
+      {
+        name: senderName,
+        title: emailTitle,
+        description: emailDescription,
+        email: senderEmail,
+      },
+      { withCredentials: true }
+    );
+
+    console.log("Email sent successfully:", response.data);
+    toast.success("Email sent successfully! ✅");
+
+  } catch (error) {
+    console.error("Error sending email:", error.response ? error.response.data : error.message);
+    toast.error("Failed to send email. Please try again later. ❌");
+  }
+};
 
   
     if (!isAuthenticated) {
