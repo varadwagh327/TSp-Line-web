@@ -24,12 +24,9 @@ export const userRegister = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const login = catchAsyncErrors(async(req, res, next) => {
-    const { email, password, confirmPassword, role } = req.body;
-    if(!email || !password || !confirmPassword || !role) {
+    const { email, password, role } = req.body;
+    if(!email || !password|| !role) {
         return next(new ErrorHandler("Please Provide All Details!", 400));
-    }
-    if(password !== confirmPassword) {
-        return next(new ErrorHandler("Password And Confirm Password Do Not Match!", 400));
     }
     const user = await User.findOne({email}).select("+password");
     if(!user) {
@@ -62,9 +59,24 @@ export const logoutUser = catchAsyncErrors(async (req, res, next) => {
       })
       .json({
           success: true,
-          message: "logged out successfully!",
+          message: "User logged out successfully!",
       });
 });
+
+export const logoutEmployee = catchAsyncErrors(async (req, res, next) => {
+  res
+    .status(200)
+    .cookie("employeeToken", "", {
+      httpOnly: true,
+      expires: new Date(Date.now()),
+    })
+    .json({
+      success: true,
+      message: "Employee logged out successfully!",
+    });
+});
+
+
 
 
 export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {

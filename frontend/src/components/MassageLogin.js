@@ -14,36 +14,47 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [role, setRole] = useState('');
+    const [role] = useState('');
     
   const navigateTo = useNavigate();
 
 
     
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-          await axios
-            .post(
-              "http://localhost:4000/api/v1/user/login",
-              { email, password, confirmPassword, role: "Admin" },
-              {
-                withCredentials: true,
-                headers: { "Content-Type": "application/json" },
-              }
-            )
-            .then((res) => {
-              toast.success(res.data.message);
-              navigateTo("/messages");
-              setEmail("");
-              setPassword("");
-              setConfirmPassword("");
-              setRole("");
-            });
-        } catch (error) {
-          toast.error(error.response.data.message);
-        }
-      };
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  if (!email || !password || !confirmPassword) {
+    toast.error("Please fill all fields!");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    toast.error("Password and Confirm Password do not match!");
+    return;
+  }
+
+  try {
+    const res = await axios.post(
+      "http://localhost:4000/api/v1/user/login",
+      { email, password, confirmPassword, role: "Admin" }, // Admin login
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    toast.success(res.data.message);
+    // Navigate after login
+    navigateTo("/messages");
+
+    // Reset form
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Something went wrong!");
+  }
+};
+
     
       if (role) {
         return <Navigate to={"/messages"} />;
@@ -80,7 +91,6 @@ const Login = () => {
                                         value={password}
                                         onChange={(e)=> setPassword(e.target.value)}
                                     />
-                                </div>
                        
                             <input 
                                 name="confirmPassword" 
@@ -90,6 +100,7 @@ const Login = () => {
                                 value={confirmPassword}
                                 onChange={(e)=> setConfirmPassword(e.target.value)}
                             />
+                                </div>
                            {/* Button */}
             <div className="flex justify-around mt-6">
               <button className="text-white bg-blue-900 hover:bg-blue-800 inline-flex items-center justify-center w-auto px-6 py-3 shadow-xl rounded-xl">

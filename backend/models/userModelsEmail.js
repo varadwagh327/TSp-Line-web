@@ -8,7 +8,7 @@ const userSchemaEmail = new mongoose.Schema({
     email : {
         type : String,
         required : [true, "Provide email"],
-        unique : true
+        unique: false,
     },
     title : {
         type : String,
@@ -20,6 +20,6 @@ const userSchemaEmail = new mongoose.Schema({
     }
 })
 
-const UserModel = mongoose.model('Users', userSchemaEmail);
+const UserModel = mongoose.model('EmployeeEmail', userSchemaEmail);
 
 export default UserModel;
