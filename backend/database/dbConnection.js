@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 
 export const dbConnection = async () => {
   try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is not defined in environment variables");
+    }
+
     await mongoose.connect(process.env.MONGO_URI, {
       dbName: "TSp-Line",
     });
 
-    console.log("Connected to database!");
+    console.log("✅ Connected to database successfully!");
 
     // Wait for native driver DB object
     const db = mongoose.connection.db;
@@ -15,6 +19,7 @@ export const dbConnection = async () => {
     // Make sure collection exists
     const collections = await db.listCollections({ name: collName }).toArray();
     if (collections.length === 0) {
+      console.log(`ℹ️  Collection '${collName}' does not exist yet`);
       return;
     }
 
@@ -32,12 +37,15 @@ export const dbConnection = async () => {
     if (emailIndex) {
       try {
         await db.collection(collName).dropIndex(emailIndex.name);
+        console.log(`✅ Dropped unique email index: ${emailIndex.name}`);
       } catch (dropErr) {
         console.error(`❌ Failed to drop index "${emailIndex.name}":`, dropErr.message || dropErr);
       }
     } 
 
   } catch (err) {
-    console.log(`Some error occurred while connecting to database: ${err.message || err}`);
+    console.error(`❌ Database connection error: ${err.message || err}`);
+    console.error("Stack trace:", err.stack);
+    process.exit(1); // Exit the process if DB connection fails
   }
 };

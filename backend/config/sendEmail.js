@@ -18,7 +18,7 @@ const sendEmail = async ({ sendTo, subject, html }) => {
         const { data, error } = await resend.emails.send({
             from: 'Varad Wagh plt <onboarding@resend.dev>',
             to: sendTo,
-            subject: subject,
+            subject: subject || 'Message from TSp-Line',
             html: html,
         });
 

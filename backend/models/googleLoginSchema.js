@@ -21,7 +21,7 @@ const GoogleLoginSchema = new Schema(
 // Optional: Add JWT method (to reuse generateToken logic)
 GoogleLoginSchema.methods.generateJsonWebToken = function () {
   return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRE,
+    expiresIn: process.env.JWT_EXPIRES,
   });
 };
 

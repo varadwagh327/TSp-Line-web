@@ -39,6 +39,7 @@ export async function EmailUserController(request, response, next) {
       try {
         await sendEmail({
           sendTo: hrEmail,
+          subject: title,
           html: verifyEmailTemplate({
             name,
             email: email || "No email provided",

@@ -71,7 +71,7 @@ export const isGoogleAuthenticated = async (req, res, next) => {
     if (!token) return res.status(401).json({ success: false, message: "Not authenticated" });
 
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    const user = await GoogleUser.findById(payload.id);
+    const user = await User.findById(payload.id);
     if (!user) return res.status(401).json({ success: false, message: "User not found" });
 
     req.user = user;
@@ -89,7 +89,7 @@ export const requireAuth = (req, res, next) => {
   if (!authHeader?.startsWith("Bearer ")) return res.status(401).json({ error: "Unauthorized" });
   const token = authHeader.split(" ")[1];
   try {
-    const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = payload;
     next();
   } catch (err) {
