@@ -56,6 +56,7 @@ export const logoutUser = catchAsyncErrors(async (req, res, next) => {
       .cookie("userToken", "", {
           httpOnly: true,
           expires: new Date(Date.now()),
+          path: "/",
       })
       .json({
           success: true,
@@ -69,6 +70,7 @@ export const logoutEmployee = catchAsyncErrors(async (req, res, next) => {
     .cookie("employeeToken", "", {
       httpOnly: true,
       expires: new Date(Date.now()),
+      path: "/",
     })
     .json({
       success: true,
@@ -85,6 +87,7 @@ export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
       .cookie("adminToken", "", {
           httpOnly: true,
           expires: new Date(Date.now()),
+          path: "/",
       })
       .json({
           success: true,

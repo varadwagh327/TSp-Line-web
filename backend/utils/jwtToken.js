@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 // Access token (short-lived)
 export const generateAccessToken = (payload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "15m" });
+  return jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
 };
 
 // Refresh token (long-lived)
@@ -30,6 +30,7 @@ export const generateToken = (user, message, statusCode, res) => {
       httpOnly: true,
       secure: true, // ✅ Always true on HTTPS (Render uses HTTPS)
       sameSite: "none", // ✅ Required for cross-origin cookie sharing
+      path: "/", // ✅ Ensure cookie is available to all paths
     })
     .json({
       success: true,

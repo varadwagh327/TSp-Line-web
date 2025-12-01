@@ -42,14 +42,17 @@ function App() {
   const { isAuthenticated, setIsAuthenticated, setUser } =
     useContext(Context);
 
-  // ✅ Fetch user from either normal login or Google login
+  // ✅ Fetch user from either normal login or Google login on app load
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        // 1️⃣ Try normal login first
+        // 1️⃣ Try normal login first (uses cookie set by backend)
         const normalRes = await axios.get(
           `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/v1/user/user/me`,
-          { withCredentials: true }
+          { 
+            withCredentials: true,
+            timeout: 5000 // 5 second timeout
+          }
         );
 
         if (normalRes?.data?.user) {
@@ -58,13 +61,19 @@ function App() {
           return; // ✅ Stop here if normal user found
         }
       } catch (error) {
-        // continue to google check if normal failed
+        // Silently continue - user is not authenticated via normal login
+        // This is expected behavior on first page load
       }
 
       try {
         // 2️⃣ Try Google login
         const token = localStorage.getItem("googleAccessToken");
-        if (!token) throw new Error("No Google token");
+        if (!token) {
+          // No Google token either - user is not authenticated
+          setIsAuthenticated(false);
+          setUser(null);
+          return;
+        }
 
         const googleRes = await axios.get(
           `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/user/googleLogin/google/me`,
@@ -73,6 +82,7 @@ function App() {
               Authorization: `Bearer ${token}`,
             },
             withCredentials: true,
+            timeout: 5000,
           }
         );
 
@@ -84,6 +94,7 @@ function App() {
           setUser(null);
         }
       } catch (err) {
+        // Google auth also failed - user is not authenticated
         setIsAuthenticated(false);
         setUser(null);
       }
