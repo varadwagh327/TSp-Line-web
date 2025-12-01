@@ -22,6 +22,10 @@ export const generateToken = (user, message, statusCode, res) => {
       ? "employeeToken"
       : "userToken";
 
+  console.log(`🍪 Setting ${cookieName} cookie for user: ${user._id}`);
+  console.log(`   - Expires in ${process.env.COOKIE_EXPIRE} days`);
+  console.log(`   - SameSite: none, Secure: true, HttpOnly: true`);
+
   // ✅ Always use secure and sameSite: none for cross-origin on HTTPS
   res
     .status(statusCode)

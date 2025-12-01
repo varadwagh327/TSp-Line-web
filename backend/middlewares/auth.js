@@ -51,6 +51,14 @@ export const isEmployeeAuthenticated = catchAsyncErrors(async (req, res, next) =
 
 export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
     const token = req.cookies.userToken || req.cookies.employeeToken || req.cookies.adminToken;
+    
+    console.log(`🔍 Auth Check - Cookies received:`, {
+        userToken: !!req.cookies.userToken,
+        employeeToken: !!req.cookies.employeeToken,
+        adminToken: !!req.cookies.adminToken,
+        allCookies: Object.keys(req.cookies),
+    });
+    
     if (!token) {
         return next(new ErrorHandler("Not Authenticated!", 401));
     }

@@ -19,12 +19,16 @@ config({path: "./config/config.env"});
 // Validate environment variables
 import './config/validateEnv.js';
 
+// ✅ Cookie parser FIRST - before any middleware uses cookies
+app.use(cookieParser());
+
 // CORS configuration — allow frontend origin
 const corsOptions = {
     origin: 'https://tsp-line-web-solutions.onrender.com',
     credentials: true,
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+    exposedHeaders: ['Set-Cookie'],
     optionsSuccessStatus: 200,
 };
 
@@ -34,10 +38,18 @@ app.use(cors(corsOptions));
 // Handle preflight requests explicitly
 app.options('*', cors(corsOptions));
 
-app.use(cookieParser());
+// ✅ Ensure response headers allow credentials for cookies
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Origin', 'https://tsp-line-web-solutions.onrender.com');
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+}));
 
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
 app.use(limiter);
