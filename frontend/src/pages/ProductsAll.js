@@ -7,9 +7,7 @@ const ProductsAll = () => {
     return ( 
      <>
      <NavBar/>
-     <div className=" min-h-screen">
      <MyProducts/>
-     </div>
      <Footer/>
      </>
      );
