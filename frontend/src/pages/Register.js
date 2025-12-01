@@ -26,7 +26,7 @@ const Register = () => {
         try {
           await axios
             .post(
-              "http://localhost:4000/api/v1/user/user/register",
+              `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/v1/user/user/register`,
               { firstName, lastName, email, phone, password, role: "User" },
               {
                 withCredentials: true,

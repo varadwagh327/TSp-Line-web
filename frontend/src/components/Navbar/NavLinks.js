@@ -14,9 +14,10 @@ const NavLinks = () => {
       let logoutUrl = "";
 
       // Determine API route based on role
-      if (user.role === "Admin") logoutUrl = "http://localhost:4000/api/v1/user/admin/logout";
-      else if (user.role === "Employee") logoutUrl = "http://localhost:4000/api/v1/user/employee/logout";
-      else logoutUrl = "http://localhost:4000/api/v1/user/user/logout";
+      const BASE_URL = process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com";
+      if (user.role === "Admin") logoutUrl = `${BASE_URL}/api/v1/user/admin/logout`;
+      else if (user.role === "Employee") logoutUrl = `${BASE_URL}/api/v1/user/employee/logout`;
+      else logoutUrl = `${BASE_URL}/api/v1/user/user/logout`;
 
       const res = await axios.get(logoutUrl, { withCredentials: true });
       toast.success(res.data.message);

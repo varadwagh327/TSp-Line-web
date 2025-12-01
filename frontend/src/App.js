@@ -48,7 +48,7 @@ function App() {
       try {
         // 1️⃣ Try normal login first
         const normalRes = await axios.get(
-          "http://localhost:4000/api/v1/user/user/me",
+          `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/v1/user/user/me`,
           { withCredentials: true }
         );
 
@@ -67,7 +67,7 @@ function App() {
         if (!token) throw new Error("No Google token");
 
         const googleRes = await axios.get(
-          "http://localhost:4000/api/user/googleLogin/google/me",
+          `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/user/googleLogin/google/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

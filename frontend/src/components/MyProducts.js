@@ -19,7 +19,7 @@ function MyProducts() {
       try {
         setLoading(true);
         const { data } = await axios.get(
-          "http://localhost:4000/api/v1/product/getall",
+          `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/v1/product/getall`,
           { withCredentials: true }
         );
         setProduct(data.product);

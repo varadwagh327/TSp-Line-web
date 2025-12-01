@@ -39,7 +39,7 @@ export default function Email() {
 
     // Send API request
     const response = await axios.post(
-      "http://localhost:4000/api/user/Email/email",
+      `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/user/Email/email`,
       {
         name: senderName,
         title: emailTitle,
