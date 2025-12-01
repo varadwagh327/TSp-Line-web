@@ -17,6 +17,9 @@
 .env.production.local
 backend/config/config.env
 
+# logs and lock files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+yarn.lock
