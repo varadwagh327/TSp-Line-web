@@ -22,13 +22,14 @@ export const generateToken = (user, message, statusCode, res) => {
       ? "employeeToken"
       : "userToken";
 
+  // ✅ Always use secure and sameSite: none for cross-origin on HTTPS
   res
     .status(statusCode)
     .cookie(cookieName, accessToken, {
       expires: new Date(Date.now() + Number(process.env.COOKIE_EXPIRE) * 24 * 60 * 60 * 1000),
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: true, // ✅ Always true on HTTPS (Render uses HTTPS)
+      sameSite: "none", // ✅ Required for cross-origin cookie sharing
     })
     .json({
       success: true,
