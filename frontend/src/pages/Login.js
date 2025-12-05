@@ -29,6 +29,12 @@ const Login = () => {
       setIsAuthenticated(true);
       setUser(res.data.user);
 
+      // Persist access token in storage so requests can use Authorization header
+      if (res.data.accessToken) {
+        localStorage.setItem("accessToken", res.data.accessToken);
+        sessionStorage.setItem("accessToken", res.data.accessToken);
+      }
+
       // reset fields
       setEmail("");
       setPassword("");

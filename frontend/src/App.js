@@ -42,34 +42,57 @@ function App() {
   const { isAuthenticated, setIsAuthenticated, setUser } =
     useContext(Context);
 
-  // ✅ Fetch user from either normal login or Google login on app load
+  // ✅ Fetch user from either stored accessToken (localStorage/sessionStorage) or cookies on app load
   useEffect(() => {
     const fetchUser = async () => {
+      // 0️⃣ Try accessToken from localStorage/sessionStorage first
+      const storedToken = localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
+      if (storedToken) {
+        try {
+          const tokenRes = await axios.get(
+            `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/v1/user/user/me`,
+            {
+              headers: { Authorization: `Bearer ${storedToken}` },
+              withCredentials: true,
+              timeout: 5000,
+            }
+          );
+
+          if (tokenRes?.data?.user) {
+            setIsAuthenticated(true);
+            setUser(tokenRes.data.user);
+            return;
+          }
+        } catch (err) {
+          // token from storage failed - clear it and continue to cookie check
+          localStorage.removeItem("accessToken");
+          sessionStorage.removeItem("accessToken");
+        }
+      }
+
       try {
-        // 1️⃣ Try normal login first (uses cookie set by backend)
+        // 1️⃣ Try cookie-based login (backend cookie)
         const normalRes = await axios.get(
           `${process.env.REACT_APP_API_BASE || "https://tsp-line-web.onrender.com"}/api/v1/user/user/me`,
-          { 
+          {
             withCredentials: true,
-            timeout: 5000 // 5 second timeout
+            timeout: 5000,
           }
         );
 
         if (normalRes?.data?.user) {
           setIsAuthenticated(true);
           setUser(normalRes.data.user);
-          return; // ✅ Stop here if normal user found
+          return;
         }
       } catch (error) {
-        // Silently continue - user is not authenticated via normal login
-        // This is expected behavior on first page load
+        // continue to google check
       }
 
       try {
-        // 2️⃣ Try Google login
+        // 2️⃣ Try Google login using stored googleAccessToken
         const token = localStorage.getItem("googleAccessToken");
         if (!token) {
-          // No Google token either - user is not authenticated
           setIsAuthenticated(false);
           setUser(null);
           return;
@@ -94,7 +117,6 @@ function App() {
           setUser(null);
         }
       } catch (err) {
-        // Google auth also failed - user is not authenticated
         setIsAuthenticated(false);
         setUser(null);
       }

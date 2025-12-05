@@ -50,15 +50,23 @@ export const isEmployeeAuthenticated = catchAsyncErrors(async (req, res, next) =
 
 
 export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
-    const token = req.cookies.userToken || req.cookies.employeeToken || req.cookies.adminToken;
-    
+    // Check cookies first
+    let token = req.cookies.userToken || req.cookies.employeeToken || req.cookies.adminToken;
+
     console.log(`🔍 Auth Check - Cookies received:`, {
         userToken: !!req.cookies.userToken,
         employeeToken: !!req.cookies.employeeToken,
         adminToken: !!req.cookies.adminToken,
         allCookies: Object.keys(req.cookies),
+        authHeaderPresent: !!req.headers.authorization,
     });
-    
+
+    // If no cookie token, check Authorization Bearer header (allows token from localStorage)
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        token = req.headers.authorization.split(' ')[1];
+        console.log('🔑 Using Bearer token from Authorization header');
+    }
+
     if (!token) {
         return next(new ErrorHandler("Not Authenticated!", 401));
     }

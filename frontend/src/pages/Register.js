@@ -36,6 +36,11 @@ const Register = () => {
             .then((res) => {
               toast.success(res.data.message);
               setIsAuthenticated(true);
+              // Persist access token in storage so requests can use Authorization header
+              if (res.data.accessToken) {
+                localStorage.setItem("accessToken", res.data.accessToken);
+                sessionStorage.setItem("accessToken", res.data.accessToken);
+              }
               navigateTo("/");
               setFirstName("");
               setLastName("");
