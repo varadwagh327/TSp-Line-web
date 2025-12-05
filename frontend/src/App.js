@@ -59,6 +59,8 @@ function App() {
           );
 
           if (tokenRes?.data?.user) {
+            // set axios default header for the stored token
+            axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
             setIsAuthenticated(true);
             setUser(tokenRes.data.user);
             return;

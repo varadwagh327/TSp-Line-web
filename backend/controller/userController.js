@@ -52,16 +52,18 @@ export const getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
 export const logoutUser = catchAsyncErrors(async (req, res, next) => {
   res
-      .status(200)
-      .cookie("userToken", "", {
-          httpOnly: true,
-          expires: new Date(Date.now()),
-          path: "/",
-      })
-      .json({
-          success: true,
-          message: "User logged out successfully!",
-      });
+    .status(200)
+    .cookie("userToken", "", {
+      httpOnly: true,
+      maxAge: 0,
+      path: "/",
+      secure: true,
+      sameSite: "none",
+    })
+    .json({
+      success: true,
+      message: "User logged out successfully!",
+    });
 });
 
 export const logoutEmployee = catchAsyncErrors(async (req, res, next) => {
@@ -69,8 +71,10 @@ export const logoutEmployee = catchAsyncErrors(async (req, res, next) => {
     .status(200)
     .cookie("employeeToken", "", {
       httpOnly: true,
-      expires: new Date(Date.now()),
+      maxAge: 0,
       path: "/",
+      secure: true,
+      sameSite: "none",
     })
     .json({
       success: true,
@@ -83,14 +87,16 @@ export const logoutEmployee = catchAsyncErrors(async (req, res, next) => {
 
 export const logoutAdmin = catchAsyncErrors(async (req, res, next) => {
   res
-      .status(200)
-      .cookie("adminToken", "", {
-          httpOnly: true,
-          expires: new Date(Date.now()),
-          path: "/",
-      })
-      .json({
-          success: true,
-          message: "Admin logged out successfully!",
-      });
+    .status(200)
+    .cookie("adminToken", "", {
+      httpOnly: true,
+      maxAge: 0,
+      path: "/",
+      secure: true,
+      sameSite: "none",
+    })
+    .json({
+      success: true,
+      message: "Admin logged out successfully!",
+    });
 });

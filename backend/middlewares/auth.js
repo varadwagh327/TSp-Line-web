@@ -4,13 +4,16 @@ import ErrorHandler from "./errorMiddleware.js";
 import jwt from "jsonwebtoken";
 
 export const isAdminAuthenticated = catchAsyncErrors(async(req, res, next) => {
-    const token = req.cookies.adminToken;
-    if(!token) {
+    let token = req.cookies.adminToken;
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    if (!token) {
         return next(new ErrorHandler("Admin Not Authenticated!", 400));
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decoded.id);
-    if(req.user.role !== "Admin") {
+    if (req.user.role !== "Admin") {
         return next(new ErrorHandler(`${req.user.role} not authorized for this resources!`, 403));
     }
     next();
@@ -18,13 +21,16 @@ export const isAdminAuthenticated = catchAsyncErrors(async(req, res, next) => {
 
 
 export const isUserAuthenticated = catchAsyncErrors(async(req, res, next) => {
-    const token = req.cookies.userToken;
-    if(!token) {
+    let token = req.cookies.userToken;
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    if (!token) {
         return next(new ErrorHandler("User Not Authenticated!", 400));
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decoded.id);
-    if(req.user.role !== "User") {
+    if (req.user.role !== "User") {
         return next(new ErrorHandler(`${req.user.role} not authorized for this resources!`, 403));
     }
     next();
@@ -33,7 +39,11 @@ export const isUserAuthenticated = catchAsyncErrors(async(req, res, next) => {
 
 
 export const isEmployeeAuthenticated = catchAsyncErrors(async (req, res, next) => {
-    const token = req.cookies.employeeToken; // ✅ Use employeeToken
+    let token = req.cookies.employeeToken; // ✅ Use employeeToken
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+
     if (!token) {
         return next(new ErrorHandler("Employee Not Authenticated!", 400));
     }

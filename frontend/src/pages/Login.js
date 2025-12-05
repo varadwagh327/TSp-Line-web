@@ -33,6 +33,8 @@ const Login = () => {
       if (res.data.accessToken) {
         localStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("accessToken", res.data.accessToken);
+        // set default axios header so subsequent requests send Authorization
+        axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.accessToken}`;
       }
 
       // reset fields

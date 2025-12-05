@@ -7,9 +7,10 @@ const router = express.Router();
 router.post("/user/register", userRegister);
 router.post("/login", login);
 router.get("/user/me", isAuthenticated, getUserDetails);
-router.get("/user/logout", isUserAuthenticated, logoutUser);
-router.get("/admin/logout", isAdminAuthenticated, logoutAdmin);
-router.get("/employee/logout", isEmployeeAuthenticated, logoutEmployee);
+// Allow logout endpoints to clear cookies without requiring a valid token
+router.get("/user/logout", logoutUser);
+router.get("/admin/logout", logoutAdmin);
+router.get("/employee/logout", logoutEmployee);
 
 
 export default router;

@@ -21,9 +21,21 @@ const NavLinks = () => {
 
       const res = await axios.get(logoutUrl, { withCredentials: true });
       toast.success(res.data.message);
+      // Clear client-side token storage and auth state
+      localStorage.removeItem("accessToken");
+      sessionStorage.removeItem("accessToken");
+      localStorage.removeItem("googleAccessToken");
       setIsAuthenticated(false);
       navigateTo("/login");
     } catch (err) {
+      // Even if server logout fails, clear client-side state so user appears logged out
+      localStorage.removeItem("accessToken");
+      sessionStorage.removeItem("accessToken");
+      localStorage.removeItem("googleAccessToken");
+      // remove axios default Authorization header
+      try { delete axios.defaults.headers.common["Authorization"]; } catch(e) {}
+      setIsAuthenticated(false);
+      navigateTo("/login");
       toast.error(err.response?.data?.message || "Logout failed!");
     }
   };
