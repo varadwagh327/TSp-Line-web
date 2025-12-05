@@ -39,4 +39,12 @@ export const generateToken = (user, message, statusCode, res) => {
       accessToken, 
       refreshToken, 
     });
+
+  // Debug: log the Set-Cookie header that was written to the response (if any)
+  try {
+    const setCookieHeader = res.getHeader && res.getHeader('Set-Cookie');
+    console.log('🍪 Server Set-Cookie header after generating token:', setCookieHeader);
+  } catch (err) {
+    console.error('Error reading Set-Cookie header for debug:', err.message);
+  }
 };
