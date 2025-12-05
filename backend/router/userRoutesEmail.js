@@ -1,10 +1,10 @@
 import express,{ Router } from 'express';
 import {EmailUserController} from '../controller/userControllersEmail.js';
-import {isEmployeeAuthenticated} from "../middlewares/auth.js"
+import {isAuthenticated} from "../middlewares/auth.js";
 
+const userRouter = Router();
 
-const userRouter = Router()
-
-userRouter.post('/email',isEmployeeAuthenticated, EmailUserController)
+// Allow any authenticated role (Employee, Admin, User) to send email
+userRouter.post('/email', isAuthenticated, EmailUserController);
 
 export default userRouter;
